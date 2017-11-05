@@ -56,6 +56,18 @@ $( document ).ready(function() {
          <form class="col s12 m12 l8" action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
+               <label>Choose .std file input</label>
+               <div class="file-field input-field">
+                  <div class="btn red">
+                     <span>Browse</span>
+                     <input type="file" name="userfile">
+                  </div>
+                  <div class="file-path-wrapper">
+                     <input class="file-path validate" type="text" placeholder="Upload file">
+                  </div>
+               </div>
+            </div>
+            <div class="row">
             	<div class="input-field">
                 	<input id="message" name="message" type="text" class="validate">
                 	<label for="message" data-error="wrong">Message</label>

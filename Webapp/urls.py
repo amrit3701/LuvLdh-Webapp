@@ -17,6 +17,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from src import views
 from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     url(r'', include('src.urls')),
@@ -25,4 +28,4 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
