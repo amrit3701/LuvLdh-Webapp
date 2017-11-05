@@ -53,7 +53,7 @@ $( document ).ready(function() {
 
     <p style="font-size:160%;text-align:center;">Photography Contest - Upload Photo</p>
 <div class="row">
-         <form class="col s12 m12 l8" action="{% url 'upload_photo' %}" method="post" enctype="multipart/form-data">
+         <form class="col s12 m12 l8" action="{% url 'upload_contentwriting' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
                <label>Choose .std file input</label>
