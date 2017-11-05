@@ -33,16 +33,16 @@ def upload(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+"/profile")
     savedFilename = user_id + "_pic." + fi.name.split('.')[-1]
     filename = fs.save(savedFilename, fi)
-    savedFilenameURL = request.get_host() + "/media/profile" + savedFilename
+    savedFilenameURL = request.get_host() + "/media/profile/" + savedFilename
     #ipdb.set_trace()
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
     msg = "Username: " + username + "\nCategory: Photography\n" + "Description: " + message
     attachment =  {
         #'name': 'Link name',
-        'link': savedFilenameURL#"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
+        'link': savedFilenameURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
         #'caption': 'Check out this example',
         #'description': 'This is a longer description of the attachment',
-        'picture': savedFilenameURL#"http://lab.gdy.club:7777/media/1580271875386906_pic.png" #savedFilenameURL
+        'picture': savedFilenameURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png" #savedFilenameURL
     }
     print attachment['link']
     status = graph.put_wall_post(msg, attachment)
