@@ -10,11 +10,10 @@ from decouple import config
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from wand.image import Image
-
+import os
 import ipdb
 @login_required
 def home(request):
-    #ipdb.set_trace()
     return render(request, 'src/index.html')
 
 import facebook
@@ -31,6 +30,9 @@ def upload_photo(request):
     profile_link = api.get_object("me", fields="link")['link']
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+"/photography/")
     savedFilename = user_id + "." + fi.name.split('.')[-1]
+    filepath = fs.base_location + savedFilename
+    if os.path.isfile(filepath):
+        os.system("rm " + filepath)
     filename = fs.save(savedFilename, fi)
     savedFilenameURL = request.get_host() + "/media/photography/" + savedFilename
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
@@ -42,7 +44,6 @@ def upload_photo(request):
         #'description': 'This is a longer description of the attachment',
         'picture': savedFilenameURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png" #savedFilenameURL
     }
-    print attachment['link']
     status = graph.put_wall_post(msg, attachment)
     fbpostURL = URLofSharedPost(status)
     return HttpResponse("Check <a href='" + fbpostURL + "'>post</a>")
@@ -59,6 +60,9 @@ def upload_contentwriting(request):
     profile_link = api.get_object("me", fields="link")['link']
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+"/contentwriting/")
     savedFilename = user_id + "." + fi.name.split('.')[-1]
+    filepath = fs.base_location + savedFilename
+    if os.path.isfile(filepath):
+        os.system("rm " + filepath)
     filename = fs.save(savedFilename, fi)
     #ipdb.set_trace()
     savedFilenameURL = request.get_host() + "/media/contentwriting/" + savedFilename
@@ -69,11 +73,8 @@ def upload_contentwriting(request):
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
     msg = "Username: " + username + "(" + profile_link + ")\nCategory: Content Writing Contest\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
-        #'name': 'Link name',
-        'link': imageURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
-        #'caption': 'Check out this example',
-        #'description': 'This is a longer description of the attachment',
-        'picture': imageURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png" #savedFilenameURL
+        'link': imageURL,
+        'picture': imageURL,
     }
     status = graph.put_wall_post(msg, attachment)
     fbpostURL = URLofSharedPost(status)
@@ -91,6 +92,9 @@ def upload_souvenir(request):
     profile_link = api.get_object("me", fields="link")['link']
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+"/souvenir/")
     savedFilename = user_id + "." + fi.name.split('.')[-1]
+    filepath = fs.base_location + savedFilename
+    if os.path.isfile(filepath):
+        os.system("rm " + filepath)
     filename = fs.save(savedFilename, fi)
     #ipdb.set_trace()
     savedFilenameURL = request.get_host() + "/media/souvenir/" + savedFilename
@@ -101,10 +105,7 @@ def upload_souvenir(request):
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
     msg = "Username: " + username + "(" + profile_link + ")\nCategory: Souvenir Contest\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
-        #'name': 'Link name',
         'link': imageURL,
-        #'caption': 'Check out this example',
-        #'description': 'This is a longer description of the attachment',
         'picture': imageURL,
     }
     status = graph.put_wall_post(msg, attachment)
