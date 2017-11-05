@@ -51,9 +51,9 @@ $( document ).ready(function() {
         <li class="bold"><a href="https://luvldh.gdy.club" data-activates="side-menu">Info</a></li>
     </ul>                                                                
 
-    <p style="font-size:160%;text-align:center;">Contest Writing - Upload PDF</p>
+    <p style="font-size:160%;text-align:center;">Souvenir - Upload PDF</p>
 <div class="row">
-         <form class="col s12 m12 l8" action="{% url 'upload_contentwriting' %}" method="post" enctype="multipart/form-data">
+         <form class="col s12 m12 l8" action="{% url 'upload_souvenir' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
                <label>Choose .PDF file input</label>
