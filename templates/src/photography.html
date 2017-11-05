@@ -50,13 +50,35 @@ $( document ).ready(function() {
     <ul id="slide-out" class="side-nav">                                  
         <li class="bold"><a href="https://luvldh.gdy.club" data-activates="side-menu">Info</a></li>
     </ul>                                                                
-    <div class="row">
+
     <p style="font-size:160%;text-align:center;">Photography Contest - Upload Photo</p>
-    <a class="waves-effect waves-light red btn-large col s3" href='/upload_photo/'>Photography Contest</a>
-    <a class="waves-effect waves-light red btn-large col s3" href='/upload_contentwriting/'>Content Writing Contest</a>
-    <a class="waves-effect waves-light red btn-large col s3" href='/upload_souvenir/'>Souvenir Contest</a>
-    </div>
-    <main>
+<div class="row">
+         <form class="col s12 m12 l8" action="{% url 'upload_photo' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+               <label>Choose .std file input</label>
+               <div class="file-field input-field">
+                  <div class="btn red">
+                     <span>Browse</span>
+                     <input type="file" name="userfile">
+                  </div>
+                  <div class="file-path-wrapper">
+                     <input class="file-path validate" type="text" placeholder="Upload file">
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+            	<div class="input-field">
+                	<input id="message" name="message" type="text" class="validate">
+                	<label for="message" data-error="wrong">Message</label>
+            	</div>
+        	</div>
+            <div class="row">                                           
+                <button class="btn waves-effect waves-light red" type="submit" value="Submit">Post to Facebook<i class="material-icons right">send</i></button>
+            </div>
+            </form>
+            </div>
+   <main>
     <div class="container">
   </main>
 

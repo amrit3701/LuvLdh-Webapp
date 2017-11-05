@@ -34,7 +34,7 @@ def upload_photo(request):
     filename = fs.save(savedFilename, fi)
     savedFilenameURL = request.get_host() + "/media/photography/" + savedFilename
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Photography\n" + "Description: " + message
+    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Photography Contest\n" + "Description: " + message
     attachment =  {
         #'name': 'Link name',
         'link': savedFilenameURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
@@ -67,7 +67,7 @@ def upload_contentwriting(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Content Writing\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Content Writing Contest\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
         #'name': 'Link name',
         'link': imageURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
@@ -99,7 +99,7 @@ def upload_souvenir(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Souvenir\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Souvenir Contest\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
         #'name': 'Link name',
         'link': imageURL,

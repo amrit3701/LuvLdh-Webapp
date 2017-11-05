@@ -19,11 +19,11 @@ from src import views
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
-
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'', include('src.urls')),
-    url(r'^$', views.home, name='home'),
+    url(r'^$', TemplateView.as_view(template_name='src/index.html')),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
