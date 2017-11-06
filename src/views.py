@@ -11,7 +11,6 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from wand.image import Image
 import os
-import ipdb
 @login_required
 def home(request):
     return render(request, 'src/index.html')
@@ -36,7 +35,7 @@ def upload_photo(request):
     filename = fs.save(savedFilename, fi)
     savedFilenameURL = request.get_host() + "/media/photography/" + savedFilename
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Photography Contest\n" + "Description: " + message
+    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Photography Contest #LuvLdh\n" + "Description: " + message
     attachment =  {
         #'name': 'Link name',
         'link': savedFilenameURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
@@ -46,7 +45,7 @@ def upload_photo(request):
     }
     status = graph.put_wall_post(msg, attachment)
     fbpostURL = URLofSharedPost(status)
-    return HttpResponse("Check <a href='" + fbpostURL + "'>post</a>")
+    return render(request, 'src/postlink.html', {'output': fbpostURL})
 
 @login_required
 def upload_contentwriting(request):
@@ -71,14 +70,14 @@ def upload_contentwriting(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Content Writing Contest\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Content Writing Contest #LuvLdh\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
         'link': imageURL,
         'picture': imageURL,
     }
     status = graph.put_wall_post(msg, attachment)
     fbpostURL = URLofSharedPost(status)
-    return HttpResponse("Check <a href='" + fbpostURL + "'>post</a>")
+    return render(request, 'src/postlink.html', {'output': fbpostURL})
 
 @login_required
 def upload_souvenir(request):
@@ -103,18 +102,18 @@ def upload_souvenir(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Souvenir Contest\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Souvenir Contest #LuvLdh\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
         'link': imageURL,
         'picture': imageURL,
     }
     status = graph.put_wall_post(msg, attachment)
     fbpostURL = URLofSharedPost(status)
-    return HttpResponse("Check <a href='" + fbpostURL + "'>post</a>")
+    return render(request, 'src/postlink.html', {'output': fbpostURL})
 
 def URLofSharedPost(status):
     post_id = status['id'].split('_')[-1]
-    return "https://www.facebook.com/permalink.php?story_fbid="+ post_id +"&id=126210538066873"
+    return "https://www.facebook.com/sscsLdh/posts/"+ post_id
 
 def pdf_to_image(pdf_location, img_location):
     with Image(filename=pdf_location) as img:
