@@ -29,6 +29,7 @@
 	</head>
 
 	<body>
+
 		<nav class="navbar navbar-transparent navbar-absolute">
 			<div class="container">
 				<div class="navbar-header">
@@ -54,14 +55,14 @@
 								<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="">Photography</a></li>
-								<li><a href="">Content Writing</a></li>
-								<li><a href="">Souvenir</a></li>
+								<li><a href="/upload_photo">Photography</a></li>
+								<li><a href="/upload_contentwriting">Content Writing</a></li>
+								<li><a href="/upload_souvenir">Souvenir</a></li>
 							</ul>
 
 						</li>
 						<li>
-							<a href="" class="btn">
+							<a href="{% url 'logout' %}" class="btn">
 								Logout
 							</a>
 						</li>
@@ -84,10 +85,16 @@
 	                                <h4 class="card-title text-center"><b>Photography Contest</b></h4>
 	                            </div>
 	                            <div class="card-content">
-	                                <form  class="form-horizontal" method="post" action="{% url 'upload_photo' %}" enctype="multipart/form-data">
+	                              <form  class="form-horizontal" action="{% url 'upload_photo' %}" method="post" enctype="multipart/form-data">
             						{% csrf_token %}
-                     <input type="file" name="userfile" />
 	                                    <fieldset>
+	                                        <div class="form-group">
+	                                            <label class="col-sm-2 control-label">Upload Photo</label>
+												<div class="col-sm-10">
+                     							<input type="file" name="userfile" id="userfile" required="required"/>
+	                                    </div></div>
+										</fieldset>
+										<fieldset>
 	                                        <div class="form-group">
 	                                            <label class="col-sm-2 control-label">Caption</label>
 	                                            <div class="col-sm-10">
@@ -99,16 +106,14 @@
     	                                    <div class="form-group">
 	                                            <label class="col-sm-2 control-label">Description</label>
 	                                            <div class="col-sm-10">
-                                                    <textarea class="form-control" name="message" placeholder="Here can be your nice text about photo" rows="3"></textarea>
+                                                    <textarea class="form-control" name="message" id="message" placeholder="Here can be your nice text about photo" rows="3"></textarea>
 	                                            </div>
     	                                    </div>
 	                                    </fieldset>
-                                <div class="card">
                                     <div class="card-content text-center">
-                                        <button class="btn btn-info btn-fill btn-wd" onclick="demo.showSwal('success-message')">Submit</button>
+                                        <button class="btn btn-info btn-fill btn-wd">Submit</button>
                                     </div>
-                                </div>
-	                                </form>
+	                               </form>
 	                            </div>
 	                        </div>  <!-- end card -->
 	                    </div> <!-- end col-md-12 -->
@@ -119,8 +124,23 @@
 
 
 
+<footer class="footer footer-transparent">
+<div class="container">
+<div class="copyright text-center">
+&copy; <script>document.write(new Date().getFullYear())</script>, Developed by <a href="https://github.com/greatDevelopers/" target=blank>Jugadi Time</a>
+& Designed by <a href="https://www.creative-tim.com/" target=blank>Creative Tim</a>
+</div>
+</div>
+</footer>
 		</div></div>
 	</body>
+
+
+
+
+
+
+
 
 
 	<!--   Core JS Files. Extra: TouchPunch for touch library inside jquery-ui.min.js' %}   -->

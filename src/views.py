@@ -4,13 +4,15 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from decouple import config
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from wand.image import Image
+from django.contrib.auth import logout
 import os
+
 @login_required
 def home(request):
     return render(request, 'src/index.html')
@@ -21,6 +23,7 @@ import ipdb
 def upload_photo(request):
     fi = request.FILES.get('userfile')
     message = request.POST.get('message')
+    caption = request.POST.get('caption')
     social = request.user.social_auth.get(provider='facebook')
     access_token = social.extra_data['access_token']
     api = facebook.GraphAPI(access_token)
@@ -35,13 +38,13 @@ def upload_photo(request):
     filename = fs.save(savedFilename, fi)
     savedFilenameURL = request.get_host() + "/media/photography/" + savedFilename
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Photography Contest #LuvLdh\n" + "Description: " + message
+    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Photography Contest #LuvLdh\n" + "Catpion: " + caption + "\nDescription: " + message
     attachment =  {
         #'name': 'Link name',
-        'link': savedFilenameURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
+        'link': savedFilenameURL, #"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
         #'caption': 'Check out this example',
         #'description': 'This is a longer description of the attachment',
-        'picture': savedFilenameURL,#"http://lab.gdy.club:7777/media/1580271875386906_pic.png" #savedFilenameURL
+        'picture': savedFilenameURL #"http://lab.gdy.club:7777/media/1580271875386906_pic.png" #savedFilenameURL
     }
     status = graph.put_wall_post(msg, attachment)
     fbpostURL = URLofSharedPost(status)
@@ -51,6 +54,7 @@ def upload_photo(request):
 def upload_contentwriting(request):
     fi = request.FILES.get('userfile')
     message = request.POST.get('message')
+    caption = request.POST.get('caption')
     social = request.user.social_auth.get(provider='facebook')
     access_token = social.extra_data['access_token']
     api = facebook.GraphAPI(access_token)
@@ -70,10 +74,10 @@ def upload_contentwriting(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Content Writing Contest #LuvLdh\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Content Writing Contest #LuvLdh\n" + "Caption: " + caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
-        'link': imageURL,
-        'picture': imageURL,
+        'link': imageURL, #"https://lab.gdy.club",#imageURL,
+        'picture': imageURL, #"https://lab.gdy.club"#imageURL,
     }
     status = graph.put_wall_post(msg, attachment)
     fbpostURL = URLofSharedPost(status)
@@ -83,6 +87,7 @@ def upload_contentwriting(request):
 def upload_souvenir(request):
     fi = request.FILES.get('userfile')
     message = request.POST.get('message')
+    caption = request.POST.get('caption')
     social = request.user.social_auth.get(provider='facebook')
     access_token = social.extra_data['access_token']
     api = facebook.GraphAPI(access_token)
@@ -102,7 +107,7 @@ def upload_souvenir(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Souvenir Contest #LuvLdh\n" + "Description: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Souvenir Contest #LuvLdh\n" + "Caption: "+ caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
         'link': imageURL,
         'picture': imageURL,
@@ -118,3 +123,7 @@ def URLofSharedPost(status):
 def pdf_to_image(pdf_location, img_location):
     with Image(filename=pdf_location) as img:
         img.save(filename=img_location)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('https://luvldh.gdy.club')

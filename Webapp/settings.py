@@ -142,7 +142,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/upload_photo'
 
 
 SOCIAL_AUTH_FACEBOOK_KEY = config('FACEBOOK_KEY')
