@@ -16,7 +16,7 @@ def home(request):
     return render(request, 'src/index.html')
 
 import facebook
-
+import ipdb
 @login_required
 def upload_photo(request):
     fi = request.FILES.get('userfile')
