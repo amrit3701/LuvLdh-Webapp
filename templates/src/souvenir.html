@@ -24,6 +24,22 @@
 
 	<body>
 
+{% if message %}
+<!-- Sweet Alert 2 plugin -->
+<script src="{% static 'assets/js/sweetalert2.js' %}"></script>
+
+<script>
+swal({
+  title: 'Oops...',
+  type: 'error',
+  html:
+    'You have already participated in the same category.</br>Try another category. '+
+	'If this is not the case contact at <i>luvldhv2017@gmail.com</i>',
+  showCloseButton: true,
+  focusConfirm: false,
+})
+</script>
+{% endif %}
 		<nav class="navbar navbar-transparent navbar-absolute">
 			<div class="container">
 				<div class="navbar-header">
@@ -90,7 +106,7 @@
 										</fieldset>
 										<fieldset>
 	                                        <div class="form-group">
-	                                            <label class="col-sm-2 control-label">Caption</label>
+	                                            <label class="col-sm-2 control-label">Title</label>
 	                                            <div class="col-sm-10">
 	                                                <input type="text" name="caption" class="form-control">
 	                                            </div>

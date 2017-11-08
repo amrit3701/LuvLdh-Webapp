@@ -32,17 +32,14 @@ def upload_photo(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+"/photography/")
     savedFilename = user_id + "." + fi.name.split('.')[-1]
     filepath = fs.base_location + savedFilename
-    if os.path.isfile(filepath):
-        os.system("rm " + filepath)
+    if checkFile_indirectory(fs.base_location, savedFilename):
+        return render(request, 'src/photography.html', {'message': "File exist"})
     filename = fs.save(savedFilename, fi)
     savedFilenameURL = request.get_host() + "/media/photography/" + savedFilename
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Photography Contest #LuvLdh\n" + "Catpion: " + caption + "\nDescription: " + message
+    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Photography Contest #LuvLdh #sscsLdh\n" + "Catpion: " + caption + "\nDescription: " + message
     attachment =  {
-        #'name': 'Link name',
         'link': savedFilenameURL, #"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
-        #'caption': 'Check out this example',
-        #'description': 'This is a longer description of the attachment',
         'picture': savedFilenameURL #"http://lab.gdy.club:7777/media/1580271875386906_pic.png" #savedFilenameURL
     }
     status = graph.put_wall_post(msg, attachment)
@@ -63,8 +60,8 @@ def upload_contentwriting(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+"/contentwriting/")
     savedFilename = user_id + "." + fi.name.split('.')[-1]
     filepath = fs.base_location + savedFilename
-    if os.path.isfile(filepath):
-        os.system("rm " + filepath)
+    if checkFile_indirectory(fs.base_location, savedFilename):
+        return render(request, 'src/contentwriting.html', {'message': "File exist"})
     filename = fs.save(savedFilename, fi)
     #ipdb.set_trace()
     savedFilenameURL = request.get_host() + "/media/contentwriting/" + savedFilename
@@ -73,7 +70,7 @@ def upload_contentwriting(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Content Writing Contest #LuvLdh\n" + "Caption: " + caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Content Writing Contest #LuvLdh #sscsLdh\n" + "Title: " + caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
         'link': imageURL, #"https://lab.gdy.club",#imageURL,
         'picture': imageURL #"https://lab.gdy.club"#imageURL,
@@ -96,8 +93,8 @@ def upload_souvenir(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+"/souvenir/")
     savedFilename = user_id + "." + fi.name.split('.')[-1]
     filepath = fs.base_location + savedFilename
-    if os.path.isfile(filepath):
-        os.system("rm " + filepath)
+    if checkFile_indirectory(fs.base_location, savedFilename):
+        return render(request, 'src/souvenir.html', {'message': "File exist"})
     filename = fs.save(savedFilename, fi)
     #ipdb.set_trace()
     savedFilenameURL = request.get_host() + "/media/souvenir/" + savedFilename
@@ -106,7 +103,7 @@ def upload_souvenir(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Souvenir Contest #LuvLdh\n" + "Caption: "+ caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Souvenir Contest #LuvLdh #sscsLdh\n" + "Title: "+ caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
         'link': imageURL,
         'picture': imageURL
@@ -126,3 +123,23 @@ def pdf_to_image(pdf_location, img_location):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('https://luvldh.gdy.club')
+
+
+def file_base_name(file_name):
+    if '.' in file_name:
+        separator_index = file_name.index('.')
+        base_name = file_name[:separator_index]
+        return base_name
+    else:
+        return file_name
+
+def getFilename_withoutExt(path):
+    file_name = os.path.basename(path)
+    return file_base_name(file_name)
+
+def checkFile_indirectory(path, filename):
+    files = os.listdir(path)
+    for fi in files:
+        if getFilename_withoutExt(filename) == getFilename_withoutExt(fi):
+            return True
+    return False

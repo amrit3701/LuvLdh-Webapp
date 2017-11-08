@@ -23,6 +23,23 @@
 
 	<body>
 
+{% if message %}
+<!-- Sweet Alert 2 plugin -->
+<script src="{% static 'assets/js/sweetalert2.js' %}"></script>
+
+<script>
+swal({
+  title: 'Oops...',
+  type: 'error',
+  html:
+    'You have already participated in the same category.</br>Try another category. '+
+	'If this is not the case contact at <i>luvldhv2017@gmail.com</i>',
+  showCloseButton: true,
+  focusConfirm: false,
+})
+</script>
+{% endif %}
+
 		<nav class="navbar navbar-transparent navbar-absolute">
 			<div class="container">
 				<div class="navbar-header">

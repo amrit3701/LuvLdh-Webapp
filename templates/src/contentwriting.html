@@ -23,6 +23,22 @@
 
 	<body>
 
+{% if message %}
+<!-- Sweet Alert 2 plugin -->
+<script src="{% static 'assets/js/sweetalert2.js' %}"></script>
+
+<script>
+swal({
+  title: 'Oops...',
+  type: 'error',
+  html:
+    'You have already participated in the same category.</br>Try another category. '+
+	'If this is not the case contact at <i>luvldhv2017@gmail.com</i>',
+  showCloseButton: true,
+  focusConfirm: false,
+})
+</script>
+{% endif %}
 		<nav class="navbar navbar-transparent navbar-absolute">
 			<div class="container">
 				<div class="navbar-header">
@@ -89,7 +105,7 @@
 										</fieldset>
 										<fieldset>
 	                                        <div class="form-group">
-	                                            <label class="col-sm-2 control-label">Caption</label>
+	                                            <label class="col-sm-2 control-label">Title</label>
 	                                            <div class="col-sm-10">
 	                                                <input type="text" name="caption" class="form-control">
 	                                            </div>
@@ -121,7 +137,8 @@
 <div class="container">
 <div class="copyright text-center">
 &copy; <script>document.write(new Date().getFullYear())</script>, Developed by <a href="https://github.com/greatDevelopers/" target=blank>Great Developers</a>
-& Designed by <a href="https://www.creative-tim.com/" target=blank>Creative Tim</a>
+, designed by <a href="https://www.creative-tim.com/" target=blank>creative tim</a>
+</br>& hosted by <a href="https://anandep.com/" target=blank>Anand Enterprises</a>
 </div>
 </div>
 </footer>
