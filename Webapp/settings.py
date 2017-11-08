@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 from decouple import config
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd&4c5-_$=w8_y757gfq(7)69ro9b)*(xu-9(4biscdnd&k+8)_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -56,7 +55,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'Webapp.login_required_middleware.LoginRequiredMiddleware',
 ]
+
+
+LOGIN_EXEMPT_URLS = (
+ r'^$',
+ r'^oauth/',
+ r'^media/',
+)
 
 ROOT_URLCONF = 'Webapp.urls'
 
@@ -87,8 +94,12 @@ WSGI_APPLICATION = 'Webapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('DB_NAME'),
+	'USER': config('DB_USER'),
+	'PASSWORD': config('DB_PASSWORD'),
+	'HOST': '',
+	'PORT': '',
     }
 }
 
@@ -136,9 +147,9 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
+LOGIN_REDIRECT_URL = '/upload_photo'
 
 
 SOCIAL_AUTH_FACEBOOK_KEY = config('FACEBOOK_KEY')
