@@ -13,12 +13,10 @@ from wand.image import Image
 from django.contrib.auth import logout
 import os
 
-@login_required
 def home(request):
     return render(request, 'src/index.html')
 
 import facebook
-@login_required
 def upload_photo(request):
     fi = request.FILES.get('userfile')
     message = request.POST.get('message')
@@ -46,7 +44,6 @@ def upload_photo(request):
     fbpostURL = URLofSharedPost(status)
     return render(request, 'src/postlink.html', {'output': fbpostURL})
 
-@login_required
 def upload_contentwriting(request):
     fi = request.FILES.get('userfile')
     message = request.POST.get('message')
@@ -79,7 +76,6 @@ def upload_contentwriting(request):
     fbpostURL = URLofSharedPost(status)
     return render(request, 'src/postlink.html', {'output': fbpostURL})
 
-@login_required
 def upload_souvenir(request):
     fi = request.FILES.get('userfile')
     message = request.POST.get('message')
