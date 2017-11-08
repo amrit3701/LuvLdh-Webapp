@@ -18,7 +18,6 @@ def home(request):
     return render(request, 'src/index.html')
 
 import facebook
-import ipdb
 @login_required
 def upload_photo(request):
     fi = request.FILES.get('userfile')
@@ -38,7 +37,7 @@ def upload_photo(request):
     filename = fs.save(savedFilename, fi)
     savedFilenameURL = request.get_host() + "/media/photography/" + savedFilename
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Photography Contest #LuvLdh\n" + "Catpion: " + caption + "\nDescription: " + message
+    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Photography Contest #LuvLdh\n" + "Catpion: " + caption + "\nDescription: " + message
     attachment =  {
         #'name': 'Link name',
         'link': savedFilenameURL, #"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
@@ -74,10 +73,10 @@ def upload_contentwriting(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Content Writing Contest #LuvLdh\n" + "Caption: " + caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Content Writing Contest #LuvLdh\n" + "Caption: " + caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
         'link': imageURL, #"https://lab.gdy.club",#imageURL,
-        'picture': imageURL, #"https://lab.gdy.club"#imageURL,
+        'picture': imageURL #"https://lab.gdy.club"#imageURL,
     }
     status = graph.put_wall_post(msg, attachment)
     fbpostURL = URLofSharedPost(status)
@@ -107,10 +106,10 @@ def upload_souvenir(request):
     pdfLocation = fs.base_location+savedFilename
     pdf_to_image(pdfLocation+"[0]", imageLocation)
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "(" + profile_link + ")\nCategory: Souvenir Contest #LuvLdh\n" + "Caption: "+ caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
+    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Souvenir Contest #LuvLdh\n" + "Caption: "+ caption + "\nDescription: " + message + "\nRead more: http://" + savedFilenameURL + "\n"
     attachment =  {
         'link': imageURL,
-        'picture': imageURL,
+        'picture': imageURL
     }
     status = graph.put_wall_post(msg, attachment)
     fbpostURL = URLofSharedPost(status)
