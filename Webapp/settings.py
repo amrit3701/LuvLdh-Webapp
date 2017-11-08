@@ -61,6 +61,7 @@ MIDDLEWARE = [
 
 LOGIN_EXEMPT_URLS = (
  r'^$',
+ r'^oauth/',
  r'^media/',
 )
 
