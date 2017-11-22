@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'src',
+    'django_crontab',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -159,3 +160,7 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'locale': 'ru_RU',
     'fields': 'email'
 }
+
+CRONJOBS = [
+    ('*/30 * * * *', 'src.likes.updateContestWinners', '>> /tmp/scheduled_jobambu.log'),
+]
