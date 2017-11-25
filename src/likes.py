@@ -4,7 +4,7 @@ import facebook
 import requests
 import re
 import json
-
+import subprocess
 
 def getMaximiumLikes(api, posts):
     first_count = 0
@@ -40,12 +40,12 @@ def getMaximiumLikes(api, posts):
         second_count_username = re.search('Username: (.*)\n', second_count_post_data["message"]).group(1)
         second_count_user_profile = re.search('\n(.*)\nCategory:', second_count_post_data["message"]).group(1)
         second_count_post_img = api.get_object(second_count_post_data["id"], fields="link")["link"]
-    return {1: {"image": first_count_post_img,
+    return {"first": {"image": first_count_post_img,
                 "username": first_count_username,
                 "likes": first_count,
                 "user_profile": first_count_user_profile,
                 "post": first_count_post},
-            2: {"image": second_count_post_img,
+            "second": {"image": second_count_post_img,
                 "username": second_count_username,
                 "likes": second_count,
                 "user_profile": second_count_user_profile,
@@ -74,3 +74,5 @@ def updateContestWinners():
     json_dic["SouvenirContest"] =  getMaximiumLikes(api, SouvenirPosts)
     with open(settings.MEDIA_ROOT + '/WinnersData.json', 'w') as outfile:
         json.dump(json_dic, outfile)
+    cmd = ["sshpass", "-p", config('SSHPWD'), "scp", "-P3344", settings.MEDIA_ROOT + '/WinnersData.json', config('SSHUSER')+"@gdy.club:/home/amritpal/LuvLdh/WinnersData.json"] 
+    subprocess.call(cmd)
