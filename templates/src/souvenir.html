@@ -17,7 +17,7 @@
 		<!-- Cropper -->
 		<link href="{% static 'assets/css/cropper.min.css' %}" rel="stylesheet">
 		<!--  Fonts and icons     -->
-		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+		<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
 		<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 		<link href="{% static 'assets/css/themify-icons.css' %}" rel="stylesheet">
 	</head>
@@ -149,6 +149,36 @@ swal({
 
 
 
+<script>
+var file = document.getElementById('userfile');
+
+file.onchange = function(e){
+    var ext = this.value.match(/\.([^\.]+)$/)[1];
+    switch(ext)
+    {
+        case 'pdf':
+        case 'PDF':
+            break;
+        default:
+            //alert('not allowed');
+    	    $.notify({
+            	icon: "ti-face-sad",
+            	message: "Only PDF is allowed."
+
+            },{
+                type: "danger",
+                timer: 1000,
+                placement: {
+                    from: 'top',
+                    align: 'center'
+                }
+            });
+            this.value='';
+    }
+};
+</script>
+
+
 
 
 
@@ -194,7 +224,7 @@ swal({
 	<script src="{% static 'assets/js/jquery-jvectormap.js' %}"></script>
 
 	<!--  Google Maps Plugin    -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+	<!--<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>-->
 
 	<!-- Wizard Plugin    -->
 	<script src="{% static 'assets/js/jquery.bootstrap.wizard.min.js' %}"></script>
