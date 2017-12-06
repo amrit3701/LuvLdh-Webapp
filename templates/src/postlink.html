@@ -77,14 +77,25 @@
 	                            <div class="card-header">
 	                                <h4 class="card-title text-center"><div class="text-success"><b>Submitted! Well done</b></div></h4>
 	                            </div>
-	                            <div class="card-content">
-<h4>Share your post and tag as many friends as you can</h4>
-<div  class="alert alert-warning text-center" id="copy"> {{ output }} 
-<button type="button" id="copydiv" class="btn btn-danger btn-simple btn-rotate btn-lg" data-clipboard-action="copy" data-clipboard-target="#copy">
-<span class="btn-label">
-<i class="ti-files"></i>
-</span>Copy link of submitted Entry</button></div>
-<p>Exceed your winning chance by participating in other categories.</p>
+                                       <div class="card-content">  
+                                           <p>To get likes, which will enable your entry shortlisted, share (by  
+                                           clicking on sharing and then on "sharing...") your entry, and paste following  
+                                           content in edit box displaying "Say something about this..." while  
+                                           sharing:</p> 
+                                            <div  class="alert alert-warning text-center" id="copy"> 
+                                                <div class="row">                
+                                                    <div class="col-md-9">
+                                                        I have participated in a contest related to #Ludhiana. Please like my entry at {{ output }}. 
+For participation: #No age bar #No language bar #Exciting prizes. For more information: https://luvldh.gdy.club                         </div>
+                                                    <div class="col-md-3">  
+                                                        <button type="button" id="copydiv" class="btn btn-danger btn-simple btn-rotate btn-lg" data-clipboard-action="copy" data-clipboard-target="#copy">  
+                                                        <span class="btn-label">  
+                                                            <i class="ti-files"></i>  
+                                                        </span>Copy text</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+	                  <p>Exceed your winning chance by participating in other categories.</p>
 
 	                            	                            </div>
 	                        </div>  <!-- end card -->

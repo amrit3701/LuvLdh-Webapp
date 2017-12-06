@@ -20,7 +20,6 @@ class LoginRequiredMiddleware(object):
         self.get_response = get_response
 
     def __call__(self, request):
-        print "settings.DEBUG: ", settings.DEBUG
         assert hasattr(request, 'user'), "The Login Required middleware\
  requires authentication middleware to be installed. Edit your\
  MIDDLEWARE setting to insert\

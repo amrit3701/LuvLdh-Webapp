@@ -35,7 +35,7 @@ def upload_photo(request):
     filename = fs.save(savedFilename, fi)
     savedFilenameURL = request.get_host() + "/media/photography/" + savedFilename
     graph = facebook.GraphAPI(access_token = config('PAGE_ACCESS_TOKEN'))
-    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Photography Contest #LuvLdh #sscsLdh\n" + "Catpion: " + caption + "\nDescription: " + message
+    msg = "Username: " + username + "\n" + profile_link + "\nCategory: Photography Contest #LuvLdh #sscsLdh\n" + "Caption: " + caption + "\nDescription: " + message
     attachment =  {
         'link': savedFilenameURL, #"http://lab.gdy.club:7777/media/1580271875386906_pic.png", #savedFilenameURL,
         'picture': savedFilenameURL #"http://lab.gdy.club:7777/media/1580271875386906_pic.png" #savedFilenameURL
